@@ -12,7 +12,7 @@ void UCroshMC::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorCo
 	float speed = ((ACroshPawn*)GetOwner())->MovementSpeed;
 	FVector InputVector = ConsumeInputVector().GetClampedToMaxSize(1.0f);
 
-	if (InputVector.DistSquared > 0)
+	if (InputVector.Size() > 0.0f)
 		moving = true;
 	else
 		moving = false;
