@@ -12,6 +12,11 @@ void UCroshMC::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorCo
 	float speed = ((ACroshPawn*)GetOwner())->MovementSpeed;
 	FVector InputVector = ConsumeInputVector().GetClampedToMaxSize(1.0f);
 
+	if (InputVector.DistSquared > 0)
+		moving = true;
+	else
+		moving = false;
+
 	FHitResult Hit;
 	TickMove = FMath::Lerp(TickMove, InputVector * speed * DeltaTime, 0.2f);
 	SafeMoveUpdatedComponent(TickMove, UpdatedComponent->GetComponentRotation(), true, Hit);
@@ -85,4 +90,9 @@ bool UCroshMC::IsGrounded()
 	// DrawDebugSphere(GetWorld(), Position, Radius, 8, FColor::Green);
 
 	return CheckGroundedAtPosition(Position);
+}
+
+bool UCroshMC::IsMoving()
+{
+	return moving;
 }

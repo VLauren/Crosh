@@ -18,10 +18,14 @@ private:
 	int jumpFrames;
 	FRotator CurrentRotation;
 	FVector TickMove;
+	bool moving;
 
 protected:
 
 	float ZVel;
+
+public:
+
 
 private:
 
@@ -31,7 +35,10 @@ public:
 
 	void Jump();
 
-	bool IsGrounded();
+	UFUNCTION(BlueprintPure)
+		bool IsGrounded();
+	UFUNCTION(BlueprintPure)
+		bool IsMoving();
 
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 };
