@@ -45,8 +45,8 @@ ACroshPawn::ACroshPawn()
 	// Default values
 	MovementSpeed = 500.0f;
 	// RotationLerpSpeed = 0.1f;
-	// JumpStrength = 24;
-	// GravityStrength = 60.0f;
+	JumpStrength = 24;
+	GravityStrength = 60.0f;
 
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
@@ -63,6 +63,7 @@ void ACroshPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	UE_LOG(LogTemp, Warning, TEXT("IsGrounded %s"), (Movement->IsGrounded() ? TEXT("true") : TEXT("false")));
 }
 
 // Called to bind functionality to input
@@ -73,6 +74,7 @@ void ACroshPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	// Input de movimiento
 	PlayerInputComponent->BindAxis("MoveRight", this, &ACroshPawn::MoveRight);
 	PlayerInputComponent->BindAxis("MoveForward", this, &ACroshPawn::MoveForward);
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACroshPawn::Jump);
 
 	// Input de acciones
 	// PlayerInputComponent->BindAction("Cosa", IE_Pressed, this, &ACroshPawn::Cosa);
@@ -85,7 +87,13 @@ void ACroshPawn::MoveForward(float AxisValue)
 
 void ACroshPawn::MoveRight(float AxisValue)
 {
-	UE_LOG(LogTemp, Warning, TEXT("MoveRight %f"), AxisValue);
 	Movement->AddInputVector(AxisValue * FVector::RightVector);
+}
+
+void ACroshPawn::Jump()
+{
+	UE_LOG(LogTemp, Warning, TEXT("JUMP! A"));
+	if (Movement->IsGrounded())
+		Movement->Jump();
 }
 

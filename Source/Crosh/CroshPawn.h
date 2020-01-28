@@ -16,8 +16,12 @@ class CROSH_API ACroshPawn : public APawn
 
 public:
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Movement")
 		float MovementSpeed;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		float JumpStrength;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		float GravityStrength;
 
 protected:
 
@@ -51,5 +55,6 @@ private:
 
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue);
+	void Jump();
 
 };
