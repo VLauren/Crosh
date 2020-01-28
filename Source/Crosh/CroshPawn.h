@@ -16,6 +16,9 @@ class CROSH_API ACroshPawn : public APawn
 
 public:
 
+	UPROPERTY(EditAnywhere)
+		float MovementSpeed;
+
 protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowProvateAccess = "true"))

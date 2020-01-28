@@ -43,7 +43,7 @@ ACroshPawn::ACroshPawn()
 	Movement->UpdatedComponent = RootComponent;
 
 	// Default values
-	// MovementSpeed = 500.0f;
+	MovementSpeed = 500.0f;
 	// RotationLerpSpeed = 0.1f;
 	// JumpStrength = 24;
 	// GravityStrength = 60.0f;
@@ -85,6 +85,7 @@ void ACroshPawn::MoveForward(float AxisValue)
 
 void ACroshPawn::MoveRight(float AxisValue)
 {
+	UE_LOG(LogTemp, Warning, TEXT("MoveRight %f"), AxisValue);
 	Movement->AddInputVector(AxisValue * FVector::RightVector);
 }
 
