@@ -63,7 +63,6 @@ void ACroshPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	UE_LOG(LogTemp, Warning, TEXT("IsGrounded %s"), (Movement->IsGrounded() ? TEXT("true") : TEXT("false")));
 }
 
 // Called to bind functionality to input
@@ -92,7 +91,6 @@ void ACroshPawn::MoveRight(float AxisValue)
 
 void ACroshPawn::Jump()
 {
-	UE_LOG(LogTemp, Warning, TEXT("JUMP! A"));
 	if (Movement->IsGrounded())
 		Movement->Jump();
 }

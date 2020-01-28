@@ -30,6 +30,19 @@ void UCroshMC::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorCo
 
 	if (jumpFrames > 0)
 		jumpFrames--;
+
+	// Orientacion del modelo
+	if (!InputVector.IsNearlyZero())// && IsGrounded() && jumpFrames <= 0)
+	{
+		// Target rotation
+		FRotator ctrlRot = InputVector.Rotation();
+		// float rotLerpSpeed = ((ACroshPawn*)GetOwner())->RotationLerpSpeed;
+		float rotLerpSpeed = 0.1f;
+
+		// Rotate character towards target rotation
+		CurrentRotation = FMath::Lerp(CurrentRotation, ctrlRot, rotLerpSpeed);
+		UpdatedComponent->GetOwner()->SetActorRotation(CurrentRotation);
+	}
 }
 
 void UCroshMC::Jump()
@@ -37,7 +50,6 @@ void UCroshMC::Jump()
 	float jumpStrength = ((ACroshPawn*)GetOwner())->JumpStrength;
 	ZVel = jumpStrength;
 	jumpFrames = 3;
-	UE_LOG(LogTemp, Warning, TEXT("JUMP! B"));
 }
 
 bool UCroshMC::CheckGroundedAtPosition(FVector Position)
@@ -66,7 +78,7 @@ bool UCroshMC::IsGrounded()
 	FVector Position = UpdatedComponent->GetOwner()->GetActorLocation() - FVector(0, 0, CapsuleHalfHeight - Radius /*+ 3.0f*/);
 
 	// Grounded sphere
-	DrawDebugSphere(GetWorld(), Position, Radius, 8, FColor::Green);
+	// DrawDebugSphere(GetWorld(), Position, Radius, 8, FColor::Green);
 
 	return CheckGroundedAtPosition(Position);
 }
