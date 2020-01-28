@@ -10,10 +10,11 @@ void UCroshMC::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorCo
 	// Movimiento Horizontal
 
 	float speed = ((ACroshPawn*)GetOwner())->MovementSpeed;
-	FVector InputVector = ConsumeInputVector();
+	FVector InputVector = ConsumeInputVector().GetClampedToMaxSize(1.0f);
 
 	FHitResult Hit;
-	SafeMoveUpdatedComponent(InputVector * speed * DeltaTime, UpdatedComponent->GetComponentRotation(), true, Hit);
+	TickMove = FMath::Lerp(TickMove, InputVector * speed * DeltaTime, 0.2f);
+	SafeMoveUpdatedComponent(TickMove, UpdatedComponent->GetComponentRotation(), true, Hit);
 
 	// Movimiento Vertical
 
@@ -73,6 +74,9 @@ bool UCroshMC::CheckGroundedAtPosition(FVector Position)
 
 bool UCroshMC::IsGrounded()
 {
+	if (ZVel > 0)
+		return false;
+
 	float CapsuleHalfHeight = Cast<UCapsuleComponent>(UpdatedComponent)->GetUnscaledCapsuleHalfHeight();
 	float Radius = Cast<UCapsuleComponent>(UpdatedComponent)->GetScaledCapsuleRadius();
 	FVector Position = UpdatedComponent->GetOwner()->GetActorLocation() - FVector(0, 0, CapsuleHalfHeight - Radius /*+ 3.0f*/);

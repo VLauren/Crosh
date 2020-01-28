@@ -17,6 +17,7 @@ class CROSH_API UCroshMC : public UPawnMovementComponent
 private:
 	int jumpFrames;
 	FRotator CurrentRotation;
+	FVector TickMove;
 
 protected:
 
